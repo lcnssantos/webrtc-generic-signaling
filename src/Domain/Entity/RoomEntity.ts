@@ -15,7 +15,7 @@ export class RoomEntity {
 
     addUser = (user: UserEntity) => {
       if (this.users.length < this.maxUserNumber) {
-        if (this.users.find(userFind => userFind.id === user.id)) {
+        if (this.users.find(userFind => userFind.getId() === user.getId())) {
           throw new UserAlreadyInRoomError()
         } else {
           this.users.push(user)
@@ -26,7 +26,7 @@ export class RoomEntity {
     }
 
     removeUser = (user: UserEntity) => {
-      this.users = this.users.filter(actualUser => actualUser.id !== user.id)
+      this.users = this.users.filter(actualUser => actualUser.getId() !== user.getId())
     }
 
     getUsers = (): Array<UserEntity> => {
@@ -34,7 +34,7 @@ export class RoomEntity {
     }
 
     hasUser = (user: UserEntity): Boolean => {
-      return this.users.find(actualUser => actualUser.id === user.id) !== undefined
+      return this.users.find(actualUser => actualUser.getId() === user.getId()) !== undefined
     }
 
     static fromRaw (data: {id: string, maxUserNumbers: number, users: Array<UserEntity>}) {
