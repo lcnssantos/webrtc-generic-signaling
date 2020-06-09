@@ -1,5 +1,6 @@
 import { UserEntity } from './UserEntity'
 import { FullRoomError } from '../errors/full-room.error'
+import { UserAlreadyInRoomError } from '../errors/user-already-in-room.error'
 
 export class RoomEntity {
     private id: string
@@ -14,7 +15,11 @@ export class RoomEntity {
 
     addUser = (user: UserEntity) => {
       if (this.users.length < this.maxUserNumber) {
-        this.users.push(user)
+        if (this.users.find(userFind => userFind.id === user.id)) {
+          throw new UserAlreadyInRoomError()
+        } else {
+          this.users.push(user)
+        }
       } else {
         throw new FullRoomError()
       }

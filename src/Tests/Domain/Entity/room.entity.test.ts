@@ -1,46 +1,51 @@
 import { RoomEntity } from '../../../Domain/Entity/RoomEntity'
 import { UserEntity } from '../../../Domain/Entity/UserEntity'
 import { FullRoomError } from '../../../Domain/errors/full-room.error'
+import { UserAlreadyInRoomError } from '../../../Domain/errors/user-already-in-room.error'
 
-const getSut = () => {
-  const room = new RoomEntity(1, 'any_id')
-  const user = new UserEntity('any_id')
+const getUserForSut = (id: string) => {
+  return new UserEntity(id)
+}
+const getSut = (maxUsersOfRoom: number) => {
+  const room = new RoomEntity(maxUsersOfRoom, 'any_id')
+  const user = getUserForSut('any_id')
 
   return { room, user }
 }
 
-describe('Should test Room Entity', () => {
-  test('Should add user to the room', () => {
-    const { room, user } = getSut()
+describe('Should test roomEntity hasUser method', () => {
+  test("Shoudl return false if user isn't inside the room", () => {
+    const { room, user } = getSut(1)
+    expect(room.hasUser(user)).toBe(false)
+  })
+
+  test('Should return true if user is inside the room', () => {
+    const { room, user } = getSut(1)
+    room.addUser(user)
+    expect(room.hasUser(user)).toBe(true)
+  })
+})
+
+describe('Should test roomEntity addUser method', () => {
+  test('Should add user to a room', () => {
+    const { room, user } = getSut(1)
     room.addUser(user)
     expect(room.hasUser(user)).toBe(true)
   })
 
-  test('Should remove user from the room', () => {
-    const { room, user } = getSut()
+  test('Should throw if user is already at room', () => {
+    const { room, user } = getSut(2)
     room.addUser(user)
-    room.removeUser(user)
-    expect(room.hasUser(user)).toBe(false)
+    expect(() => room.addUser(user)).toThrow(UserAlreadyInRoomError)
   })
 
-  test('Should return empty array of users if room is empty', () => {
-    const { room } = getSut()
-    expect(room.getUsers()).toHaveLength(0)
-  })
-
-  test('Should return error when users inside room is above maximum', () => {
-    const { room } = getSut()
-    const user1 = new UserEntity('any_id_1')
-    const user2 = new UserEntity('any_id_2')
+  test('Should throw if room is full', () => {
+    const { room } = getSut(1)
+    const user1 = getUserForSut('any_id1')
+    const user2 = getUserForSut('any_id2')
 
     room.addUser(user1)
 
-    expect(() => room.addUser(user2)).toThrow()
-  })
-
-  test('Should return false if user is not inside room', () => {
-    const { room, user } = getSut()
-
-    expect(room.hasUser(user)).toBe(false)
+    expect(() => room.addUser(user2)).toThrow(FullRoomError)
   })
 })
