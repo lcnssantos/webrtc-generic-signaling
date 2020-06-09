@@ -50,7 +50,7 @@ describe('Should test roomEntity addUser method', () => {
   })
 })
 
-describe('Should test roomEntity removeUser', () => {
+describe('Should test roomEntity removeUser method', () => {
   test('Should remove user correctly', () => {
     const { room, user } = getSut(1)
     room.addUser(user)
@@ -60,11 +60,28 @@ describe('Should test roomEntity removeUser', () => {
   })
 })
 
-describe('Should test roomEntity getUsers', () => {
+describe('Should test roomEntity getUsers method', () => {
   test('Should return instance of users according user inserted', () => {
     const { room, user } = getSut(1)
     room.addUser(user)
     const userReturned = room.getUsers()[0]
     expect(userReturned).toEqual(userReturned)
+  })
+})
+
+describe('Should test roomEntity fromRaw method', () => {
+  test('Should return instance of roomEntity with correctly data', () => {
+    const { user } = getSut(1)
+    const data = {
+      id: 'any_id',
+      users: [user],
+      maxUserNumbers: 10
+    }
+
+    const room = RoomEntity.fromRaw(data)
+
+    expect(room.hasUser(user)).toBe(true)
+    expect(room.getId()).toBe('any_id')
+    expect(room.getSize()).toBe(data.maxUserNumbers)
   })
 })

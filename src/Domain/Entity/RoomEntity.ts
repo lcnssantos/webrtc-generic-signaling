@@ -36,4 +36,18 @@ export class RoomEntity {
     hasUser = (user: UserEntity): Boolean => {
       return this.users.find(actualUser => actualUser.id === user.id) !== undefined
     }
+
+    static fromRaw (data: {id: string, maxUserNumbers: number, users: Array<UserEntity>}) {
+      const room = new this(data.maxUserNumbers, data.id)
+      data.users.forEach(room.addUser)
+      return room
+    }
+
+    public getId () {
+      return this.id
+    }
+
+    public getSize () {
+      return this.maxUserNumber
+    }
 }
