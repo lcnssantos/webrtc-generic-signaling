@@ -1,0 +1,21 @@
+{
+  "name": "webrtc-generic-signaling",
+  "version": "1.0.0",
+  "description": "WebRTC Generic Signaling written in Typescript",
+  "main": "index.js",
+  "author": "Luciano Souza Santos",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "@babel/preset-typescript": "^7.10.1",
+    "@types/jest": "^25.2.3",
+    "babel-jest": "^26.0.1",
+    "jest": "^26.0.1",
+    "typescript": "^3.9.5"
+  },
+  "scripts": {
+    "test": "jest"
+  }
+}
