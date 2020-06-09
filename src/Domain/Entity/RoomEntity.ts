@@ -15,14 +15,12 @@ export class RoomEntity {
     }
 
     addUser = (user: UserEntity) => {
-      if (this.users.length < this.maxUserNumber) {
-        if (this.users.find(userFind => userFind.getId() === user.getId())) {
-          throw new UserAlreadyInRoomError()
-        } else {
-          this.users.push(user)
-        }
-      } else {
+      if (this.hasUser(user)) {
+        throw new UserAlreadyInRoomError()
+      } else if (this.roomIsFull()) {
         throw new FullRoomError()
+      } else {
+        this.users.push(user)
       }
     }
 
@@ -50,5 +48,9 @@ export class RoomEntity {
 
     public getSize () {
       return this.maxUserNumber
+    }
+
+    private roomIsFull () {
+      return this.users.length >= this.maxUserNumber
     }
 }
