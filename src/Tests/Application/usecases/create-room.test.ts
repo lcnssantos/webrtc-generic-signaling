@@ -18,7 +18,7 @@ describe('Should test createRoom useCase', () => {
     expect(room).not.toBeUndefined()
   })
 
-  test('Should thrown when user id already exist', async () => {
+  test('Should thrown when room already exist', async () => {
     const { repository, createRoomUseCase } = getSut()
     await createRoomUseCase.createRoom('any_id', 10)
 
