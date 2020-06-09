@@ -1,6 +1,7 @@
 import { UserEntity } from './UserEntity'
 import { FullRoomError } from '../errors/full-room.error'
 import { UserAlreadyInRoomError } from '../errors/user-already-in-room.error'
+import { UserNotFoundError } from '../errors/user-not-found.error'
 
 export class RoomEntity {
     public id: string
@@ -26,7 +27,11 @@ export class RoomEntity {
     }
 
     removeUser = (user: UserEntity) => {
-      this.users = this.users.filter(actualUser => actualUser.getId() !== user.getId())
+      if (this.hasUser(user)) {
+        this.users = this.users.filter(actualUser => actualUser.getId() !== user.getId())
+      } else {
+        throw new UserNotFoundError()
+      }
     }
 
     getUsers = (): Array<UserEntity> => {

@@ -13,5 +13,8 @@ export class UserLeaveRoomUseCase {
   }
 
   async leave (room: RoomEntity, user: UserEntity) {
+    this.WebRTC.leaveRoom(room, user)
+    room.removeUser(user)
+    await this.roomRepository.createOrUpdate(room.id, room)
   }
 }
