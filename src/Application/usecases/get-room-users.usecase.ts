@@ -2,17 +2,17 @@ import { RoomEntity } from '../../Domain/Entity/RoomEntity'
 import { WebRTCInterface } from '../interfaces/WebRTCInterface'
 import { RepositoryContract } from '../interfaces/RepositoryInterface'
 import { RoomAlreadyExistError } from '../../Domain/errors/room-already-exist.error'
+import { UserEntity } from '../../Domain/Entity/UserEntity'
 
-export class GetRoomUsersUsecase {
-    private WebRTC: WebRTCInterface
+export class GetRoomUsersUseCase {
     private roomRepository: RepositoryContract<RoomEntity>
 
-    constructor (WebRTC: WebRTCInterface, roomRepository: RepositoryContract<RoomEntity>) {
-      this.WebRTC = WebRTC
+    constructor (roomRepository: RepositoryContract<RoomEntity>) {
       this.roomRepository = roomRepository
     }
 
-    async get (room: RoomEntity) {
-
+    async get (room: RoomEntity): Promise<Array<UserEntity>> {
+      const roomData = this.roomRepository.find(room.id)
+      return roomData.getUsers()
     }
 }

@@ -3,7 +3,6 @@ import { UserEntity } from '../../../Domain/Entity/UserEntity'
 import { WebRTCMock } from '../mocks/WebRTCMock'
 import { RepositoryInMemoryMock } from '../mocks/RepositoryInMemoryMock'
 import { GetRoomsUsecase } from '../../../Application/usecases/get-rooms.usecase'
-import { DeleteRoomUseCase } from '../../../Application/usecases/delete-room.usecase'
 import { CreateRoomUseCase } from '../../../Application/usecases/create-room.usecase'
 
 const getSut = () => {
