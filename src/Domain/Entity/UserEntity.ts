@@ -1,5 +1,5 @@
 export class UserEntity {
-  private id: string
+  public id: string
   constructor (id: string) {
     this.id = id
   }

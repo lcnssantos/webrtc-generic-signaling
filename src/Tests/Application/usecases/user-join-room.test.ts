@@ -6,10 +6,11 @@ import { WebRTCMock } from '../mocks/WebRTCMock'
 import { RepositoryInMemoryMock } from '../mocks/RepositoryInMemoryMock'
 
 const getSut = () => {
-  const userJoinRoomUseCase = new UserJoinRoomUseCase(new WebRTCMock(), new RepositoryInMemoryMock<RoomEntity>())
+  const repository = new RepositoryInMemoryMock<RoomEntity>()
+  const userJoinRoomUseCase = new UserJoinRoomUseCase(new WebRTCMock(), repository)
   const room = new RoomEntity(10, 'any_id')
   const user = new UserEntity('any_id')
-  return { userJoinRoomUseCase, room, user }
+  return { userJoinRoomUseCase, room, user, repository }
 }
 
 describe('Should test userJoinRoom usecase', () => {
@@ -27,5 +28,15 @@ describe('Should test userJoinRoom usecase', () => {
     userJoinRoomUseCase.join(room, user)
 
     return expect(userJoinRoomUseCase.join(room, user)).rejects.toEqual(new UserAlreadyInRoomError())
+  })
+
+  test('should save room to update room in repo when user join at room', async () => {
+    const { userJoinRoomUseCase, room, user, repository } = getSut()
+
+    await userJoinRoomUseCase.join(room, user)
+
+    const roomFromRepo = repository.find(room.id)
+
+    expect(roomFromRepo).not.toBeUndefined()
   })
 })

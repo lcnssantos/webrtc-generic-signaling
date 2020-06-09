@@ -81,7 +81,7 @@ describe('Should test roomEntity fromRaw method', () => {
     const room = RoomEntity.fromRaw(data)
 
     expect(room.hasUser(user)).toBe(true)
-    expect(room.getId()).toBe('any_id')
+    expect(room.id).toBe('any_id')
     expect(room.getSize()).toBe(data.maxUserNumbers)
   })
 })

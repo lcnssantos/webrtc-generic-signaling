@@ -15,6 +15,6 @@ export class UserJoinRoomUseCase {
     async join (room: RoomEntity, user: UserEntity) {
       await this.WebRTC.joinRoom(room, user)
       room.addUser(user)
-      await this.roomRepository.createOrUpdate(room.getId(), room)
+      await this.roomRepository.createOrUpdate(room.id, room)
     }
 }

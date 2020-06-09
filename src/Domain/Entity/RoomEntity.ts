@@ -3,7 +3,7 @@ import { FullRoomError } from '../errors/full-room.error'
 import { UserAlreadyInRoomError } from '../errors/user-already-in-room.error'
 
 export class RoomEntity {
-    private id: string
+    public id: string
     private maxUserNumber: number
     private users: Array<UserEntity>
 
@@ -41,10 +41,6 @@ export class RoomEntity {
       const room = new this(data.maxUserNumbers, data.id)
       data.users.forEach(room.addUser)
       return room
-    }
-
-    public getId () {
-      return this.id
     }
 
     public getSize () {
