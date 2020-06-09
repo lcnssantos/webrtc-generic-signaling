@@ -8,6 +8,6 @@ describe('Should test userEntity fromRaw method', () => {
 
     const user = UserEntity.fromRaw(data)
 
-    expect(user.getId()).toBe(data.id)
+    expect(user.id).toBe(data.id)
   })
 })

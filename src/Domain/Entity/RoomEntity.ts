@@ -26,7 +26,7 @@ export class RoomEntity {
 
     removeUser = (user: UserEntity) => {
       if (this.hasUser(user)) {
-        this.users = this.users.filter(actualUser => actualUser.getId() !== user.getId())
+        this.users = this.users.filter(actualUser => actualUser.id !== user.id)
       } else {
         throw new UserNotFoundError()
       }
@@ -37,7 +37,7 @@ export class RoomEntity {
     }
 
     hasUser = (user: UserEntity): Boolean => {
-      return this.users.find(actualUser => actualUser.getId() === user.getId()) !== undefined
+      return this.users.find(actualUser => actualUser.id === user.id) !== undefined
     }
 
     static fromRaw (data: {id: string, maxUserNumbers: number, users: Array<UserEntity>}) {

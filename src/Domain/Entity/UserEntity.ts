@@ -7,8 +7,4 @@ export class UserEntity {
   static fromRaw (data: {id: string}) {
     return new this(data.id)
   }
-
-  public getId () {
-    return this.id
-  }
 }
