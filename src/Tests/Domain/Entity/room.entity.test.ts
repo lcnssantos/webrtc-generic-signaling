@@ -37,4 +37,10 @@ describe('Should test Room Entity', () => {
 
     expect(() => room.addUser(user2)).toThrow()
   })
+
+  test('Should return false if user is not inside room', () => {
+    const { room, user } = getSut()
+
+    expect(room.hasUser(user)).toBe(false)
+  })
 })
