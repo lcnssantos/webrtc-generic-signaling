@@ -12,10 +12,14 @@
     "@babel/preset-typescript": "^7.10.1",
     "@types/jest": "^25.2.3",
     "babel-jest": "^26.0.1",
+    "husky": "^4.2.5",
     "jest": "^26.0.1",
+    "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.9.5"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest --watch",
+    "dev:server": "ts-node-dev --respawn --transpileOnly src/index.ts",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'"
   }
 }
