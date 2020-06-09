@@ -49,3 +49,22 @@ describe('Should test roomEntity addUser method', () => {
     expect(() => room.addUser(user2)).toThrow(FullRoomError)
   })
 })
+
+describe('Should test roomEntity removeUser', () => {
+  test('Should remove user correctly', () => {
+    const { room, user } = getSut(1)
+    room.addUser(user)
+    const length = room.getUsers().length
+    room.removeUser(user)
+    expect(room.getUsers()).toHaveLength(length - 1)
+  })
+})
+
+describe('Should test roomEntity getUsers', () => {
+  test('Should return instance of users according user inserted', () => {
+    const { room, user } = getSut(1)
+    room.addUser(user)
+    const userReturned = room.getUsers()[0]
+    expect(userReturned).toEqual(userReturned)
+  })
+})
