@@ -1,10 +1,10 @@
-import { RepositoryContract } from 'Application/interfaces/RepositoryInterface'
+import { GenericRepositoryContract } from 'Application/interfaces/GenericRepositoryContract'
 
 interface GenericType {
   id: any
 }
 
-export class RepositoryInMemoryMock<T extends GenericType> implements RepositoryContract<T> {
+export class RepositoryInMemoryMock<T extends GenericType> implements GenericRepositoryContract<T> {
     private data: Array<T>
 
     constructor () {

@@ -1,4 +1,4 @@
-export interface RepositoryContract<T> {
+export interface GenericRepositoryContract<T> {
     findAll(): Array<T>
     add(data: T)
     deleteAll()

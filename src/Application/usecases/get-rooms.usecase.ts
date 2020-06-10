@@ -1,5 +1,5 @@
 import { RoomEntity } from '../../Domain/Entity/RoomEntity'
-import { WebRTCInterface } from '../interfaces/WebRTCInterface'
+import { WebRTCContract } from '../interfaces/WebRTCContract'
 import { RepositoryContract } from '../interfaces/RepositoryInterface'
 import { RoomAlreadyExistError } from '../../Domain/errors/room-already-exist.error'
 

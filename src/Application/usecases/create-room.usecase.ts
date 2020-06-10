@@ -1,13 +1,13 @@
 import { RoomEntity } from '../../Domain/Entity/RoomEntity'
-import { WebRTCInterface } from '../interfaces/WebRTCInterface'
+import { WebRTCContract } from '../interfaces/WebRTCContract'
 import { RepositoryContract } from '../interfaces/RepositoryInterface'
 import { RoomAlreadyExistError } from '../../Domain/errors/room-already-exist.error'
 
 export class CreateRoomUseCase {
-    private WebRTC: WebRTCInterface
+    private WebRTC: WebRTCContract
     private roomRepository: RepositoryContract<RoomEntity>
 
-    constructor (WebRTC: WebRTCInterface, roomRepository: RepositoryContract<RoomEntity>) {
+    constructor (WebRTC: WebRTCContract, roomRepository: RepositoryContract<RoomEntity>) {
       this.WebRTC = WebRTC
       this.roomRepository = roomRepository
     }
