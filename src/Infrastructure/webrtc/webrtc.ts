@@ -17,6 +17,7 @@ export class WebRTC implements WebRTCContract {
     }
 
     joinRoom (room: RoomEntity, user: UserEntity) {
+
     }
 
     leaveRoom (room: RoomEntity, user: UserEntity) {
