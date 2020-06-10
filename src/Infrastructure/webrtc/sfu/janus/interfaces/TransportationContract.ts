@@ -1,5 +1,7 @@
+import { GenericMessage } from '../transports/WebSocket/websocket-transport'
+
 export interface TransportationContract {
-    sendMessage(data: Object)
-    getLastMessage(): Object,
-    getMessageById(id: string): Object
+    sendMessage(id: string, data: Object)
+    deleteMessage (id: string),
+    addMessageListener(id: string, callback: (msg: GenericMessage) => void)
 }

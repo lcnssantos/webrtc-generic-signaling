@@ -1,46 +1,55 @@
 import { TransportationContract } from '../../interfaces/TransportationContract'
 import { WebsocketInterface } from './interfaces/websocket-interface'
+import { uuid } from '../../../../../libs/uuid'
 
-interface GenericMessage {
-    id: string,
-    [key: string]: any
+export interface GenericMessage {
+  [key: string]: any
 }
 
 export class WebsocketTransport implements TransportationContract {
-    private receiveBuffer: Array<GenericMessage>
-    private sendBuffer: Array<GenericMessage>
-    private webSocket: WebsocketInterface
+    private receiveBuffer: Map<string, GenericMessage>
+    private sendBuffer: Map<string, GenericMessage>
+    private webSockets: Array<WebsocketInterface>
+    private connectionSelected: number;
+    private messageListeners: Map<string, (message: GenericMessage) => void>
 
-    constructor (websocket: WebsocketInterface) {
-      this.webSocket = websocket
+    constructor (websockets: Array<WebsocketInterface>) {
+      this.webSockets = websockets
+      this.connectionSelected = 0
+      this.receiveBuffer = new Map()
+      this.sendBuffer = new Map()
+      this.startSendBuffer()
+      this.messageListeners = new Map()
+      this.webSockets.forEach(websocket => websocket.setListener((message: string) => this.receiveMessage(message)))
+    }
 
-      this.receiveBuffer = []
-      this.sendBuffer = []
+    addMessageListener (id: string, callback: (message: GenericMessage) => void) {
+      this.messageListeners.set(id, callback)
+    }
 
+    deleteMessage (id: string) {
+      this.receiveBuffer.delete(id)
+    }
+
+    sendMessage (id: string, data: GenericMessage) {
+      this.sendBuffer.set(id, data)
       this.startSendBuffer()
     }
 
-    getLastMessage (): Object {
-      return undefined
-    }
-
-    getMessageById (id: string): GenericMessage {
-      return this.receiveBuffer.find(data => data.id === id)
-    }
-
-    sendMessage (data: GenericMessage) {
-      return this.addMessageToSendBuffer(data)
-    }
-
-    private addMessageToSendBuffer (data: GenericMessage) {
-      this.sendBuffer.push(data)
-      this.startSendBuffer()
+    private receiveMessage (message: string) {
+      const msgData: GenericMessage = JSON.parse(message)
+      const keys = this.messageListeners.forEach(callback => callback(msgData))
+      this.receiveBuffer.set(uuid.create(), msgData)
     }
 
     private startSendBuffer () {
-      while (this.sendBuffer.length) {
-        const message = this.sendBuffer.shift()
-        this.webSocket.sendMessage(message)
+      while (this.sendBuffer.size) {
+        const message = this.sendBuffer.get(this.sendBuffer.keys()[0])
+        this.webSockets[this.connectionSelected].sendMessage(JSON.stringify(message))
+        this.connectionSelected++
+        if (this.connectionSelected >= this.webSockets.length) {
+          this.connectionSelected = 0
+        }
       }
     }
 }

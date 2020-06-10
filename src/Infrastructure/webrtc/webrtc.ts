@@ -11,6 +11,7 @@ export class WebRTC implements WebRTCContract {
     }
 
     createRoom (room: RoomEntity) {
+      this.sfu.createRoom(room.id)
     }
 
     deleteRoom (room: RoomEntity) {

@@ -49,6 +49,7 @@ export class WebsocketConnection implements WebsocketInterface {
     }
 
     sendMessage (data: any) {
+      console.log(data)
       this.connection.send(data)
     }
 

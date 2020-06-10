@@ -5,6 +5,8 @@ import { WebsocketConnection } from './Infrastructure/webrtc/sfu/janus/transport
 import { RoomEntity } from './Domain/Entity/RoomEntity'
 import { UserEntity } from './Domain/Entity/UserEntity'
 import { RepositoryInMemory } from './Infrastructure/repository/RepositoryInMemory'
+import { UserUsecases } from './Application/usecases/user.usecases'
+import { RoomsUsecase } from './Application/usecases/rooms.usecase'
 
 const webSocketConnection = new WebsocketConnection({
   protocol: 'janus-protocol',
@@ -12,13 +14,17 @@ const webSocketConnection = new WebsocketConnection({
   port: 8188
 }, 15000)
 
-const webSocketTransport = new WebsocketTransport(webSocketConnection)
+const webSocketTransport = new WebsocketTransport([webSocketConnection])
 const janus = new JanusSfu(webSocketTransport)
 const webRtc = new WebRTC(janus)
 
 const room = new RoomEntity(10, 'any_id')
 const user = new UserEntity('any_id_user')
 
-/* const joinRoomUseCase = new UserJoinRoomUseCase(webRtc, new RepositoryInMemory<RoomEntity>())
+const userUseCase = new UserUsecases(webRtc, new RepositoryInMemory<RoomEntity>())
+const roomUseCase = new RoomsUsecase(webRtc, new RepositoryInMemory<RoomEntity>())
 
-joinRoomUseCase.join(room, user) */
+setTimeout(() => {
+  roomUseCase.create('any_id', 10)
+  // userUseCase.joinRoom(room, user)
+}, 3000)
