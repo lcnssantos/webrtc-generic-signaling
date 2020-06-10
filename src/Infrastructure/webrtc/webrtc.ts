@@ -1,12 +1,12 @@
 import { WebRTCContract } from '../../Application/interfaces/WebRTCContract'
 import { RoomEntity } from '../../Domain/Entity/RoomEntity'
 import { UserEntity } from '../../Domain/Entity/UserEntity'
-import { WebRTCSFU } from './interfaces/webRTCSFU'
+import { WebRTCSFUContract } from './interfaces/webRTCSFUContract'
 
 export class WebRTC implements WebRTCContract {
-    private sfu: WebRTCSFU
+    private sfu: WebRTCSFUContract
 
-    constructor (sfu: WebRTCSFU) {
+    constructor (sfu: WebRTCSFUContract) {
       this.sfu = sfu
     }
 

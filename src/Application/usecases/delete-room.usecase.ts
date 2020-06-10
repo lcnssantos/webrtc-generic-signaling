@@ -1,13 +1,13 @@
 import { WebRTCContract } from '../interfaces/WebRTCContract'
-import { RepositoryContract } from '../interfaces/RepositoryInterface'
+import { GenericRepositoryContract } from '../interfaces/GenericRepositoryContract'
 import { RoomEntity } from '../../Domain/Entity/RoomEntity'
 import { RoomNotFoundError } from '../../Domain/errors/room-not-found.error'
 
 export class DeleteRoomUseCase {
     private WebRTC: WebRTCContract
-    private roomRepository: RepositoryContract<RoomEntity>
+    private roomRepository: GenericRepositoryContract<RoomEntity>
 
-    constructor (WebRTC: WebRTCContract, roomRepository: RepositoryContract<RoomEntity>) {
+    constructor (WebRTC: WebRTCContract, roomRepository: GenericRepositoryContract<RoomEntity>) {
       this.WebRTC = WebRTC
       this.roomRepository = roomRepository
     }

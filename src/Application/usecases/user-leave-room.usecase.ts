@@ -1,13 +1,13 @@
 import { WebRTCContract } from '../interfaces/WebRTCContract'
 import { RoomEntity } from '../../Domain/Entity/RoomEntity'
 import { UserEntity } from '../../Domain/Entity/UserEntity'
-import { RepositoryContract } from 'Application/interfaces/RepositoryInterface'
+import { GenericRepositoryContract } from 'Application/interfaces/GenericRepositoryContract.js'
 
 export class UserLeaveRoomUseCase {
   private WebRTC: WebRTCContract
-  private roomRepository: RepositoryContract<RoomEntity>
+  private roomRepository: GenericRepositoryContract<RoomEntity>
 
-  constructor (WebRTC: WebRTCContract, roomRepository: RepositoryContract<RoomEntity>) {
+  constructor (WebRTC: WebRTCContract, roomRepository: GenericRepositoryContract<RoomEntity>) {
     this.WebRTC = WebRTC
     this.roomRepository = roomRepository
   }
